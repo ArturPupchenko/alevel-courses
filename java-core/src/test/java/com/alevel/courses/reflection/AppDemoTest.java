@@ -9,7 +9,7 @@ public class AppDemoTest {
     @Test
     public void test_canSetFieldsWithAnnotation() {
         AppProperties appProperties = new AppProperties();
-        AppDemo.initFieldsFromPropFile(appProperties);
+        FiledInitializer.initFieldsFromPropFile(appProperties);
         assertEquals(appProperties.book, "MyBook");
         assertEquals(appProperties.author, "MyAuthor");
     }
