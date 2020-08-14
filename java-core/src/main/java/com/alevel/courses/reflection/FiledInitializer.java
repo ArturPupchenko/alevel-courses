@@ -14,7 +14,7 @@ public class FiledInitializer {
 
             Class<? extends Object> classOfInstance = obj.getClass();
 
-            Field[] fields = classOfInstance.getDeclaredFields();
+            Field[] fields = classOfInstance.getFields();
             for (Field field : fields) {
                 String fieldName = field.getName();
                 field.setAccessible(true);
