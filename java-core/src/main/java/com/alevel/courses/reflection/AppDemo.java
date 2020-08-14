@@ -9,13 +9,18 @@ import java.util.Properties;
 
 public class AppDemo {
 
-
     public static void main(String[] args) {
-        AppProperties instance = new AppProperties();
+        AppProperties appProperties = new AppProperties();
+        initFieldsFromPropFile(appProperties);
+        System.out.println(appProperties.toString());
+    }
+
+
+    public static void initFieldsFromPropFile(AppProperties appProperties) {
         try {
             Properties props = loadProperties();
 
-            Class<? extends AppProperties> classOfInstance = instance.getClass();
+            Class<? extends AppProperties> classOfInstance = appProperties.getClass();
 
             Field[] fields = classOfInstance.getDeclaredFields();
             for (Field field : fields) {
@@ -24,8 +29,7 @@ public class AppDemo {
                 PropertyKey propertyKeyAnnotation = field.getAnnotation(PropertyKey.class);
                 if (propertyKeyAnnotation == null) continue;
                 else {
-                    field.set(instance, props.getProperty(fieldName));
-                    System.out.println(field.get(instance));
+                    field.set(appProperties, props.getProperty(fieldName));
                 }
             }
 
