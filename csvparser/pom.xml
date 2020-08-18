@@ -44,7 +44,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.alevel.courses.csvparser.CsvAppDemo</mainClass>
+                            <mainClass>com.alevel.courses.csvparser.CsvMapperDemo</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
