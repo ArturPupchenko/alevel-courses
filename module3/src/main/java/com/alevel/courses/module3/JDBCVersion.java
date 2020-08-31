@@ -5,6 +5,7 @@ import com.alevel.courses.module3.jdbc.dao.AccountDao;
 import com.alevel.courses.module3.jdbc.dao.OperationDao;
 import com.alevel.courses.module3.jdbc.dao.UserDao;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -28,7 +29,7 @@ public class JDBCVersion {
             final UserDao userDao = new UserDao(connection);
             final AccountDao accountDao = new AccountDao(connection);
 
-            String path = "requested-statement.txt";
+            String path = "module3" + File.separatorChar + "requested-statement.txt";
             final StatementBuilderDao statementBuilderDao = new StatementBuilderDao(connection, operationDao, userDao, accountDao);
             String dateFrom = "2020-08-30 22:00:30";
             String dateTo = "2020-08-30 23:40:30";
