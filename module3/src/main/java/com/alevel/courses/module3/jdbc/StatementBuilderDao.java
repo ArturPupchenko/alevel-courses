@@ -56,8 +56,8 @@ public class StatementBuilderDao {
         Long sum = null;
         try (PreparedStatement incomesSum = connection.prepareStatement("select sum(amount) from operations where amount > 0 " +
                 "and timestamp < ? and timestamp > ? and account_id = 1")) {
-            incomesSum.setTimestamp(1, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(to).toInstant()));
-            incomesSum.setTimestamp(2, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(from).toInstant()));
+            incomesSum.setTimestamp(1, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(to).toInstant()));
+            incomesSum.setTimestamp(2, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(from).toInstant()));
 
             ResultSet resultSet = incomesSum.executeQuery();
             if (resultSet.next())
@@ -95,7 +95,7 @@ public class StatementBuilderDao {
             String amount = operation.getAmount().toString();
             String finalBalance = account.getBalance().toString();
             String incomesSum = sumOfIncomes.toString();
-            String time = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format((operation.getTimestamp()));
+            String time = operation.getTimestamp().toString();
 
             cells[i][j] = username;
             cells[i][j++] = accountId;

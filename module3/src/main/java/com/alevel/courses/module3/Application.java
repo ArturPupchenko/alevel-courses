@@ -10,7 +10,7 @@ public class Application {
     public static void main(String[] args) {
         // Init DB
         // new MockDataLoader().init();
-        JPAVersion.run(new String[]{"1", "postgres", "3176rz1t"});
+//        JPAVersion.run(new String[]{"1", "postgres", "3176rz1t"});
         JDBCVersion.run(new String[]{"1", "postgres", "3176rz1t"});
     }
 }

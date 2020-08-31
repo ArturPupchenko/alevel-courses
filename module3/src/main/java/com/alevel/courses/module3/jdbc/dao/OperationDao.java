@@ -22,13 +22,24 @@ public class OperationDao {
         Operation operation;
         Long amount;
         Timestamp timestamp;
+        Date parsedFrom = new Date();
+        Date parsedTo = new Date();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            parsedFrom = dateFormat.parse(from);
+            parsedTo = dateFormat.parse(to);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         try (PreparedStatement getOperation = connection.prepareStatement("SELECT * from operations where timestamp < " +
                 "? and timestamp > ? and account_id = ?")) {
-
-            getOperation.setTimestamp(1, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(to).toInstant()));
-            getOperation.setTimestamp(2, Timestamp.from(new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(from).toInstant()));
+            Timestamp timestampFrom = new java.sql.Timestamp(parsedFrom.getTime());
+            Timestamp timestampTo = new java.sql.Timestamp(parsedTo.getTime());
+            getOperation.setTimestamp(1, timestampTo);
+            getOperation.setTimestamp(2, timestampFrom);
             getOperation.setLong(3, accountId);
+
             ResultSet resultSet = getOperation.executeQuery();
 
             while (resultSet.next()) {
@@ -45,10 +56,7 @@ public class OperationDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
         }
-
         return incomeOperations;
     }
 }

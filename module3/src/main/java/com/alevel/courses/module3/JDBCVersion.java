@@ -24,19 +24,18 @@ public class JDBCVersion {
         props.setProperty("password", password);
 
         try (Connection connection = DriverManager.getConnection(url, props)) {
-            String dateTo = "2020-08-30T22:00:30";
-            String dateFrom = "2020-08-30T23:40:30";
-
-            Scanner in = new Scanner(System.in);
-            System.out.println("Enter account id: ");
-            Long id = in.nextLong();
-
             final OperationDao operationDao = new OperationDao(connection);
             final UserDao userDao = new UserDao(connection);
             final AccountDao accountDao = new AccountDao(connection);
 
             String path = "requested-statement.txt";
             final StatementBuilderDao statementBuilderDao = new StatementBuilderDao(connection, operationDao, userDao, accountDao);
+            String dateFrom = "2020-08-30 22:00:30";
+            String dateTo = "2020-08-30 23:40:30";
+
+            Scanner in = new Scanner(System.in);
+            System.out.println("Enter account id: ");
+            Long id = in.nextLong();
 
             statementBuilderDao.requestStatement(id, dateFrom, dateTo);
             statementBuilderDao.writeStatementToFile(path);

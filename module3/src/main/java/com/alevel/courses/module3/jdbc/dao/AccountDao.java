@@ -17,14 +17,14 @@ public class AccountDao {
 
     public Account findAccountById(Long id) {
         Account account = new Account();
-        try (PreparedStatement getOperation = connection.prepareStatement("SELECT * from accounts where id = ?")) {
-            getOperation.setLong(1, id);
+        try (PreparedStatement getAccount= connection.prepareStatement("SELECT * from accounts where id = ?")) {
+            getAccount.setLong(1, id);
             Long accountId;
             String name;
             Long userId;
             Long balance;
 
-            ResultSet resultSet = getOperation.executeQuery();
+            ResultSet resultSet = getAccount.executeQuery();
             if (resultSet.next()) {
                 accountId = resultSet.getLong(1);
                 name = resultSet.getString(3);
