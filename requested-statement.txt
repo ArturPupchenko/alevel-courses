@@ -1,3 +1,0 @@
-user name,account id,account name,type,amount,final balance,sum of income,time
-1,Primary,income,1000,600,1000,2020-08-30T19:42:47.278813Z,null
-1,Primary,expense,-400,600,1000,2020-08-30T19:47:11Z,null

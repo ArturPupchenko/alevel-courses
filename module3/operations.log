@@ -1,6 +1,0 @@
-2020-08-30 22:42:47,275 INFO [main] c.a.c.m.j.c.AccountController [AccountController.java : 30] User John added1000 from account Primary
-2020-08-30 22:42:47,321 INFO [main] c.a.c.m.j.s.OperationsControlService [OperationsControlService.java : 51] User John with account Primary made income operation with amount 1000 and categories [Salary, Prize]
-2020-08-30 22:47:11,427 INFO [main] c.a.c.m.j.c.AccountController [AccountController.java : 27] User John removed-400 from account Primary
-2020-08-30 22:47:11,474 INFO [main] c.a.c.m.j.s.OperationsControlService [OperationsControlService.java : 55] Username John with account id Primary made expense operation with amount -400 and categories [Food, Transport, Games]
-2020-08-30 22:58:53,833 INFO [main] c.a.c.m.j.c.AccountController [AccountController.java : 30] User John added 332 from account Secondary
-2020-08-30 22:58:53,876 INFO [main] c.a.c.m.j.s.OperationsControlService [OperationsControlService.java : 51] User John with account Secondary made income operation with amount 332 and categories [Preium, Prize, Salary]
