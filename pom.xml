@@ -15,7 +15,7 @@
         <module>jdbcbox</module>
         <module>csvparser</module>
         <module>jpabox</module>
-        <module>module3</module>
+        <module>modules/module3</module>
     </modules>
 
     <dependencies>
