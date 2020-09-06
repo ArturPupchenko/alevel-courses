@@ -4,9 +4,12 @@ import com.alevel.courses.modules.module3.entity.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class OperationDao {
 
+    private static Logger log = LoggerFactory.getLogger(OperationDao.class);
 
     private final SessionFactory sessionFactory;
 
@@ -36,6 +39,7 @@ public class OperationDao {
                     session.saveOrUpdate(account);
                     session.saveOrUpdate(income);
                     transaction.commit();
+                    log.info("Added operation: " + income.toString());
 
                 } else if (balance > amount) {
 
@@ -52,8 +56,8 @@ public class OperationDao {
                     session.saveOrUpdate(account);
                     session.saveOrUpdate(expense);
                     transaction.commit();
+                    log.info("Added operation: " + expense.toString());
                 }
-
             } catch (Exception e) {
                 if (transaction != null) {
                     transaction.rollback();

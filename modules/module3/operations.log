@@ -1,0 +1,12 @@
+2020-09-06 18:16:20,423 INFO [main] c.a.c.m.m.s.InitDbService [InitDbService.java : 34] Added user
+2020-09-06 18:16:20,626 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 42] Added operation: com.alevel.courses.modules.module3.entity.Income@113f9078
+2020-09-06 18:16:20,647 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 59] Added operation: com.alevel.courses.modules.module3.entity.Expense@426131d7
+2020-09-06 18:16:20,666 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 42] Added operation: com.alevel.courses.modules.module3.entity.Income@11df2829
+2020-09-06 18:16:20,681 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 59] Added operation: com.alevel.courses.modules.module3.entity.Expense@7ab2a07e
+2020-09-06 18:16:24,709 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 42] Added operation: com.alevel.courses.modules.module3.entity.Income@13250132
+2020-09-06 18:16:24,726 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 59] Added operation: com.alevel.courses.modules.module3.entity.Expense@6dcab9d9
+2020-09-06 18:16:24,738 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 42] Added operation: com.alevel.courses.modules.module3.entity.Income@448c92fc
+2020-09-06 18:16:24,749 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 59] Added operation: com.alevel.courses.modules.module3.entity.Expense@8c0a23f
+2020-09-06 18:16:24,765 INFO [main] c.a.c.m.m.d.OperationDao [OperationDao.java : 42] Added operation: com.alevel.courses.modules.module3.entity.Income@7a31ca20
+2020-09-06 18:16:24,767 INFO [main] c.a.c.m.m.s.StatementServiceJDBC [StatementServiceJDBC.java : 31] Connecting to database...
+2020-09-06 18:16:24,822 INFO [main] c.a.c.m.m.s.StatementServiceJDBC [StatementServiceJDBC.java : 33] Connected database successfully.

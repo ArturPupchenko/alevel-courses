@@ -5,8 +5,12 @@ import com.alevel.courses.modules.module3.entity.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class UserDao {
+
+    private static Logger log = LoggerFactory.getLogger(OperationDao.class);
 
     private final SessionFactory sessionFactory;
 
