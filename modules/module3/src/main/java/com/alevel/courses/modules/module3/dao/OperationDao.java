@@ -23,6 +23,7 @@ public class OperationDao {
             Transaction transaction = null;
             try (Session session = sessionFactory.openSession()) {
                 Account account = session.get(Account.class, accountId);
+                String userName = account.getUser().getPersonalInformation().getName();
                 Long balance = account.getBalance();
 
                 if (amount > 0) {
@@ -39,10 +40,9 @@ public class OperationDao {
                     session.saveOrUpdate(account);
                     session.saveOrUpdate(income);
                     transaction.commit();
-                    log.info("Added operation: " + income.toString());
+                    log.info("User " + userName + " added operation: " + income.toString());
 
                 } else if (balance > Math.abs(amount)) {
-
                     Expense expense = new Expense();
                     expense.setAccount(account);
                     expense.setAmount(amount);
@@ -56,7 +56,7 @@ public class OperationDao {
                     session.saveOrUpdate(account);
                     session.saveOrUpdate(expense);
                     transaction.commit();
-                    log.info("Added operation: " + expense.toString());
+                    log.info("User " + userName + " added operation: " + expense.toString());
                 }
             } catch (Exception e) {
                 if (transaction != null) {
