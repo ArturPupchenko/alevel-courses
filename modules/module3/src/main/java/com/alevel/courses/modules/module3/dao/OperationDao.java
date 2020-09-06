@@ -41,7 +41,7 @@ public class OperationDao {
                     transaction.commit();
                     log.info("Added operation: " + income.toString());
 
-                } else if (balance > amount) {
+                } else if (balance > (-amount)) {
 
                     Expense expense = new Expense();
                     expense.setAccount(account);

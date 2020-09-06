@@ -42,7 +42,7 @@ public class Income extends Operation {
                 "; account id = " + this.getAccount().getId() +
                 "; amount = " + this.getAmount() +
                 "; creation time = " + DatesUtil.formatInstantToISO(this.getTimestamp()) +
-                "; expense categories = {");
+                "; income categories = {");
         for (int i = 0; i < incomeCategories.size() - 1; i++) {
             incomeAsString += incomeCategories.get(i).getName() + ",";
         }
