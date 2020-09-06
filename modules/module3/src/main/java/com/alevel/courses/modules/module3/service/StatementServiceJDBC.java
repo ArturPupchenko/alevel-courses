@@ -3,16 +3,15 @@ package com.alevel.courses.modules.module3.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.*;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.alevel.courses.modules.module3.util.CsvTable.createCsvTableAndWriteItTiFile;
+
 public class StatementServiceJDBC {
-//    2) Экспорт выписки по счету в csv формате
-//    (должен создавать выходной файл .csv).
-//    Выписка должна включать список операций за определенный период,
-//    а также общую сумму доходов и сальдо.
 
     private static final Logger log = LoggerFactory.getLogger(StatementServiceJDBC.class);
 
@@ -41,19 +40,64 @@ public class StatementServiceJDBC {
     }
 
     public void getStatements(Long userId, Long accountId, Timestamp from, Timestamp to) {
-        try (PreparedStatement getOperations = connection.prepareStatement(
-                "SELECT id FROM operations WHERE timestamp > ? AND timestamp < ?")) {
 
-            getOperations.setTimestamp(1, from);
-            getOperations.setTimestamp(2, to);
-
-            ResultSet resultSet = getOperations.executeQuery();
+        try (PreparedStatement getOperationsOfCurrentAccountInSelectedTimeRange = connection.prepareStatement(
+                "SELECT * FROM operations WHERE operations.timestamp > ? AND operations.timestamp < ? AND operations.account_id = ? ORDER BY operations.timestamp")) {
+            getOperationsOfCurrentAccountInSelectedTimeRange.setTimestamp(1, from);
+            getOperationsOfCurrentAccountInSelectedTimeRange.setTimestamp(2, to);
+            getOperationsOfCurrentAccountInSelectedTimeRange.setLong(3, accountId);
+            ResultSet resultSet = getOperationsOfCurrentAccountInSelectedTimeRange.executeQuery();
             List<Long> operationsId = new ArrayList<>();
+            List<Long> operationsAmount = new ArrayList<>();
+            List<Timestamp> operationsTimestamp = new ArrayList<>();
             while (resultSet.next()) {
-//                operationsId.add(resultSet.getLong());
+                if (resultSet.getLong(4) == accountId) {
+                    operationsId.add(resultSet.getLong(1));
+                    operationsAmount.add(resultSet.getLong(2));
+                    operationsTimestamp.add(resultSet.getTimestamp(3));
+                }
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+            long balanceBeforeFirstOperationInTimeRange = 0;
+
+            try (PreparedStatement getBalanceBeforeRequestedOperations = connection.prepareStatement(
+                    "SELECT SUM(operations.amount) FROM operations WHERE operations.timestamp < ? AND operations.account_id = ?")) {
+                getBalanceBeforeRequestedOperations.setTimestamp(1, from);
+                getBalanceBeforeRequestedOperations.setLong(2, accountId);
+                ResultSet resultSet2 = getBalanceBeforeRequestedOperations.executeQuery();
+                while (resultSet2.next()) {
+                    balanceBeforeFirstOperationInTimeRange = resultSet2.getLong(1);
+                }
+            }
+
+            List<Long> sumOfIncome = calculateSumOfIncome(operationsAmount);
+            List<Long> saldo = calculateSaldo(operationsAmount, balanceBeforeFirstOperationInTimeRange);
+
+            String path = "modules" + File.separatorChar + "module3" + File.separatorChar + "requested-statement.txt";
+            File statemetsFile = new File(path);
+            statemetsFile.createNewFile();
+            createCsvTableAndWriteItTiFile(path, operationsId, operationsAmount, operationsTimestamp, sumOfIncome, saldo);
+
+        } catch (SQLException | IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    public static List<Long> calculateSumOfIncome(List<Long> operationsAmount) {
+        List<Long> SumOfIncome = new ArrayList<>();
+        Long sum = 0L;
+        for (Long amount : operationsAmount) {
+            if (amount > 0) sum += amount;
+            SumOfIncome.add(sum);
+        }
+        return SumOfIncome;
+    }
+
+    private List<Long> calculateSaldo(List<Long> operationsAmount, long balance) {
+        List<Long> saldo = new ArrayList<>();
+        for (Long amount : operationsAmount) {
+            balance += amount;
+            saldo.add(balance);
+        }
+        return saldo;
     }
 }

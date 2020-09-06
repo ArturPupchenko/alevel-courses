@@ -25,16 +25,16 @@ public class Operation {
     private Long amount;
 
     @Column(nullable = false)
-    private Timestamp timestamp;
+    private Instant timestamp;
 
     public Operation() {
-        this.timestamp = Timestamp.from(Instant.now(Clock.systemUTC()));
+        this.timestamp = Instant.now(Clock.systemUTC());
     }
 
     public Operation(Account account, Long amount) {
         this.account = account;
         this.amount = amount;
-        this.timestamp = Timestamp.from(Instant.now(Clock.systemUTC()));
+        this.timestamp = Instant.now(Clock.systemUTC());
     }
 
     public Long getId() {
@@ -61,11 +61,11 @@ public class Operation {
         this.amount = amount;
     }
 
-    public Timestamp getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Timestamp timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 }

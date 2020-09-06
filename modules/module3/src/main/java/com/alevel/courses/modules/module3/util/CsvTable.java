@@ -1,12 +1,14 @@
-package com.alevel.courses.csvparser;
+package com.alevel.courses.modules.module3.util;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.sql.Timestamp;
 import java.util.*;
 
 public class CsvTable {
-
 
     private final List<String> headers;
 
@@ -18,7 +20,7 @@ public class CsvTable {
 
     private final int columns;
 
-    private CsvTable(List<String> headers, String[][] cells) {
+    public CsvTable(List<String> headers, String[][] cells) {
         this.cells = cells;
         this.rows = cells.length;
         this.columns = headers.size();
@@ -54,6 +56,10 @@ public class CsvTable {
 
     public String get(int row, String col) {
         return cells[row][headerIndices.get(col)];
+    }
+
+    public String[][] getCells() {
+        return cells;
     }
 
     public static Optional<CsvTable> fromFile(Path path) throws IOException {
@@ -103,4 +109,59 @@ public class CsvTable {
         return row;
     }
 
+    public static void createCsvTableAndWriteItTiFile(String path, List<Long> operationsId, List<Long> operationsAmount, List<Timestamp> operationTimestamps, List<Long> sumsOfIncome, List<Long> saldos) {
+        CsvTable csvTable = getCsvTable(operationsId, operationsAmount, operationTimestamps, sumsOfIncome, saldos);
+        writeIntoFile(csvTable,path);
+    }
+
+
+    public static CsvTable getCsvTable(List<Long> operationsId, List<Long> operationsAmount, List<Timestamp> operationTimestamps, List<Long> sumsOfIncome, List<Long> saldos) {
+        List<String> headers = Arrays.asList("operation_id", "amount", "time", "sum_of_income", "saldo");
+        String[][] cells = new String[operationsId.size()][headers.size()];
+        for (int i = 0; i < operationsId.size(); i++) {
+
+            String operationId = operationsId.get(i).toString();
+            String amount = operationsAmount.get(i).toString();
+            String time = DatesUtil.formatTimestampToISO(operationTimestamps.get(i));
+            String sumOfIncome = sumsOfIncome.get(i).toString();
+            String saldo = saldos.get(i).toString();
+
+            int j = 0;
+
+            cells[i][j] = operationId;
+            cells[i][++j] = amount;
+            cells[i][++j] = time;
+            cells[i][++j] = sumOfIncome;
+            cells[i][++j] = saldo;
+        }
+        return new CsvTable(headers, cells);
+    }
+
+
+    public static void writeIntoFile(CsvTable csvTable, String path) {
+        try (BufferedWriter writter = new BufferedWriter(new FileWriter(path))) {
+
+            List<String> headers = csvTable.getHeaders();
+            String[][] cells = csvTable.getCells();
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int i = 0; i < headers.size() - 1; i++) {
+                stringBuilder.append(headers.get(i)).append(",");
+            }
+            stringBuilder.append(headers.get(headers.size() - 1)).append("\n");
+            writter.write(stringBuilder.toString());
+
+
+            for (int i = 0; i < cells.length; i++) {
+                stringBuilder.setLength(0);
+                for (int j = 0; j < cells[0].length - 1; j++) {
+                    stringBuilder.append(cells[i][j]).append(",");
+                }
+                stringBuilder.append(cells[i][cells[0].length - 1]).append("\n");
+                writter.write(stringBuilder.toString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

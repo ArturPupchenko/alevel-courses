@@ -18,8 +18,8 @@ public class InitDbService {
         this.sessionFactory = sessionFactory;
     }
 
-    public Timestamp[] initDb() {
-        Timestamp [] timestamps = new Timestamp[2];
+    public Instant [] initDb() {
+        Instant [] instants = new Instant[2];
 
 
         OperationDao operationDao = new OperationDao(sessionFactory);
@@ -55,10 +55,10 @@ public class InitDbService {
         operationDao.addOperation(1, 600, "Gifts");
         operationDao.addOperation(1, -200, "Transport");
 
-        timestamps [0] = Timestamp.from(Instant.now(Clock.systemUTC()));
+        instants [0] = Instant.now(Clock.systemUTC());
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -69,9 +69,9 @@ public class InitDbService {
         operationDao.addOperation(1, 600, "Gifts");
         operationDao.addOperation(1, -200, "Transport");
 
-        timestamps [1] = Timestamp.from(Instant.now(Clock.systemUTC()));
+        instants [1] = Instant.now(Clock.systemUTC());
 
-        return timestamps;
+        return instants;
     }
 }
 

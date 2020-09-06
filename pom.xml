@@ -12,7 +12,6 @@
 
     <modules>
         <module>java-core</module>
-        <module>jdbcbox</module>
         <module>csvparser</module>
         <module>jpabox</module>
         <module>modules/module3</module>
