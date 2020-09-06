@@ -31,7 +31,6 @@ public class InitDbService {
         IncomeCategoryDao incomeCategoryDao = new IncomeCategoryDao(sessionFactory);
 
 
-        log.info("Added user");
         User user1 = new User();
         user1.setPersonalInformation(new PersonalInformation("John Wick", "Johnwich@gmail.com", "+34750455555"));
         Account account1 = new Account();

@@ -28,9 +28,7 @@ public class StatementServiceJDBC {
         Statement stmt = null;
         try {
             Class.forName(JDBC_DRIVER);
-            log.info("Connecting to database...");
             connection = DriverManager.getConnection(DB_URL, USER, PASS);
-            log.info("Connected database successfully.");
             this.connection = connection;
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

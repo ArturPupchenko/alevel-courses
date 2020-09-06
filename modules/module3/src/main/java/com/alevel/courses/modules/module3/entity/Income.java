@@ -1,8 +1,11 @@
 package com.alevel.courses.modules.module3.entity;
 
+import com.alevel.courses.modules.module3.util.DatesUtil;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @DiscriminatorValue("income")
@@ -14,17 +17,17 @@ public class Income extends Operation {
             joinColumns = @JoinColumn(name = "operation_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id")
     )
-    private Collection<IncomeCategory> incomeCategories = new ArrayList<>();
+    private List<IncomeCategory> incomeCategories = new ArrayList<>();
 
 
     public Income() {
     }
 
-    public Collection<IncomeCategory> getIncomeCategories() {
+    public List<IncomeCategory> getIncomeCategories() {
         return incomeCategories;
     }
 
-    public void setIncomeCategories(Collection<IncomeCategory> incomeCategories) {
+    public void setIncomeCategories(List<IncomeCategory> incomeCategories) {
         this.incomeCategories = incomeCategories;
     }
 
@@ -32,4 +35,19 @@ public class Income extends Operation {
         if (!this.incomeCategories.contains(incomeCategory)) incomeCategories.add(incomeCategory);
     }
 
+    @Override
+    public String toString() {
+        String incomeAsString = ("Income{" +
+                "id = " + this.getId() +
+                "; account id = " + this.getAccount().getId() +
+                "; amount = " + this.getAmount() +
+                "; creation time = " + DatesUtil.formatInstantToISO(this.getTimestamp()) +
+                "; expense categories = {");
+        for (int i = 0; i < incomeCategories.size() - 1; i++) {
+            incomeAsString += incomeCategories.get(i).getName() + ",";
+        }
+        incomeAsString += incomeCategories.get(incomeCategories.size() - 1).getName();
+        incomeAsString += '}';
+        return incomeAsString;
+    }
 }
