@@ -11,7 +11,7 @@
 <!--        <property name="hibernate.connection.password">3176rz1t</property>-->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQL10Dialect</property>
         <property name="hibernate.hbm2ddl.auto">create</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">true</property>
         <mapping class="com.alevel.courses.modules.module3.entity.Account"/>
         <mapping class="com.alevel.courses.modules.module3.entity.User"/>

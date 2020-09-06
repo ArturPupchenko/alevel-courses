@@ -6,19 +6,10 @@
         </encoder>
     </appender>
 
-<!--    <logger name="org.hibernate" level="DEBUG" additivity="false">-->
-<!--    </logger>-->
+    <!--    <logger name="org.hibernate" level="DEBUG" additivity="false">-->
+    <!--    </logger>-->
     <logger name="com.alevel.courses.modules.module3" additivity="true">
         <appender-ref ref="STDOUT"/>
     </logger>
-
-    <logger name="com.alevel.courses.modules.module3.Application" additivity="true">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <logger name="com.alevel.courses.modules.module3.service.StatementServiceJDBC" additivity="true">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-
 
 </configuration>

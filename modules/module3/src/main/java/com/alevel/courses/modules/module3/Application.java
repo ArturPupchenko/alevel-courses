@@ -53,7 +53,7 @@ public class Application {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             InitDbService initDbService = new InitDbService(sessionFactory);
-           Timestamp[] timestamps = initDbService.initDb();
+           Instant [] instants = initDbService.initDb();
 
             if (args[0].equals("1")) {
                 long operationAmount = Long.valueOf(args[5]);
@@ -69,8 +69,8 @@ public class Application {
 
             if (args[0].equals("2")) {
 
-                Timestamp from = timestamps[0];
-                Timestamp to = timestamps[1];
+                Timestamp from = Timestamp.from(instants[0]);
+                Timestamp to = Timestamp.from(instants[1]);
 
                 StatementServiceJDBC statementServiceJDBC = new StatementServiceJDBC(dbUsername, dbPassword);
                 statementServiceJDBC.getStatements(userId, accountId, from, to);
