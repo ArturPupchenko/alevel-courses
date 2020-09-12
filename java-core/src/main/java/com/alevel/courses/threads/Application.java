@@ -1,4 +1,4 @@
-package com.alevel.courses.treads;
+package com.alevel.courses.threads;
 
 
 import java.util.concurrent.BlockingDeque;
