@@ -32,7 +32,7 @@ public class ConsoleRepeaterConsumer implements Runnable {
 
     private void process(FileWriter writer) throws InterruptedException, IOException {
         String output = "";
-while (running.get()) {
+        while (running.get()) {
             while (!input.isEmpty()) {
                 output+= input.takeFirst() + " ";
                 writer.write(output);
