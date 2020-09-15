@@ -21,28 +21,34 @@ public class ConsoleRepeaterConsumer implements Runnable {
 
     @Override
     public void run() {
-        try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt",false)) {
-            process(writer);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        try {
+            process();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
 
-    private void process(FileWriter writer) throws InterruptedException, IOException {
-        String output = "";
+    private void process() throws IOException, InterruptedException {
+        String output = null;
         while (running.get()) {
+
             while (!input.isEmpty()) {
-                output+= input.takeFirst() + " ";
-                writer.write(output);
+                output += input.takeFirst() + " ";
+                try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt", false)) {
+                    writer.write(output);
+                }
+                TimeUnit.SECONDS.sleep(1);
             }
-            TimeUnit.SECONDS.sleep(1);
+
+            while (!input.isEmpty()) {
+                output += input.takeFirst() + " ";
+                try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt", false)) {
+                    writer.write(output);
+                }
+            }
+            Thread.currentThread().interrupt();
         }
-        while (!input.isEmpty()) {
-            output+= input.takeFirst() + " ";
-            writer.write(output);
-        }
-        Thread.currentThread().interrupt();
     }
 }
