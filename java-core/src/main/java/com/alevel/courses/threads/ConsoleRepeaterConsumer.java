@@ -21,7 +21,7 @@ public class ConsoleRepeaterConsumer implements Runnable {
 
     @Override
     public void run() {
-        try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt")) {
+        try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt",false)) {
             process(writer);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -31,14 +31,17 @@ public class ConsoleRepeaterConsumer implements Runnable {
     }
 
     private void process(FileWriter writer) throws InterruptedException, IOException {
-        while (running.get()) {
+        String output = "";
+while (running.get()) {
             while (!input.isEmpty()) {
-                writer.write(input.takeFirst() + " ");
+                output+= input.takeFirst() + " ";
+                writer.write(output);
             }
             TimeUnit.SECONDS.sleep(1);
         }
         while (!input.isEmpty()) {
-            writer.write(input.takeFirst() + " ");
+            output+= input.takeFirst() + " ";
+            writer.write(output);
         }
         Thread.currentThread().interrupt();
     }
