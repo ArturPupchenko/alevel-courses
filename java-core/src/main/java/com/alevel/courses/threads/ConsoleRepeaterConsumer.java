@@ -14,6 +14,8 @@ public class ConsoleRepeaterConsumer implements Runnable {
 
     private final BlockingDeque<String> input;
 
+    private final File outputFile = new File("java-core" + File.separatorChar + "output.txt");
+
     public ConsoleRepeaterConsumer(BlockingDeque<String> input, AtomicBoolean running) {
         this.running = running;
         this.input = input;
@@ -31,24 +33,24 @@ public class ConsoleRepeaterConsumer implements Runnable {
     }
 
     private void process() throws IOException, InterruptedException {
-        String output = null;
+        String output = "";
         while (running.get()) {
-
             while (!input.isEmpty()) {
                 output += input.takeFirst() + " ";
-                try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt", false)) {
-                    writer.write(output);
-                }
-                TimeUnit.SECONDS.sleep(1);
+                writeToFile(outputFile, output);
             }
+            TimeUnit.SECONDS.sleep(1);
+        }
+        while (!input.isEmpty()) {
+            output += input.takeFirst() + " ";
+            writeToFile(outputFile, output);
+        }
+        Thread.currentThread().interrupt();
+    }
 
-            while (!input.isEmpty()) {
-                output += input.takeFirst() + " ";
-                try (FileWriter writer = new FileWriter("java-core" + File.separatorChar + "output.txt", false)) {
-                    writer.write(output);
-                }
-            }
-            Thread.currentThread().interrupt();
+    private void writeToFile(File file, String text) throws IOException {
+        try (FileWriter writer = new FileWriter(file,false)) {
+            writer.write(text);
         }
     }
 }
